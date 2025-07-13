@@ -27,4 +27,15 @@ This is a Streamlit-based web application that predicts the likelihood of a loan
 - VS Code / Jupyter
 
 ### 📁 Folder Structure
+loan-default-prediction-app/
+├── app.py
+├── loan_default_model.joblib
+├── images/
+│ └── logo.JPG
+├── requirements.txt
+└── README.md
+
+👨‍💻 Created by
+Ebenezer Kwaw
+LinkedIn | GitHub
 
