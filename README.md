@@ -28,6 +28,6 @@ In another terminal: `python -m http.server 5500 --directory frontend`. Open `ht
 
 ## Deploy to Render
 
-`render.yaml` defines a free Python web service and a static frontend in Frankfurt. Import the repository as a Blueprint, or create both services using the same commands and names. Python version is pinned in `.python-version`. The API permits only the frontend origin set by `FRONTEND_ORIGIN`. Verify `/health`, `/api/model-info`, one fictional score, browser CORS, and responsive layout after deployment.
+`render.yaml` defines a free Python web service and a static frontend in Frankfurt. Import the repository as a Blueprint, or create both services using the same commands and names. Python version is pinned in `.python-version`. The deployed API is `https://loan-default-risk-api-heyq.onrender.com` and the site is `https://loan-default-risk-web.onrender.com`. The API permits only the frontend origin set by `FRONTEND_ORIGIN`. Verify `/health`, `/api/model-info`, one fictional score, browser CORS, and responsive layout after deployment.
 
 The original Streamlit app and notebook are left intact for reference. They are not part of the deployed runtime.
