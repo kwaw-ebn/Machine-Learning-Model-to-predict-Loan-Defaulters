@@ -1,41 +1,33 @@
-# Machine-Learning-Model-to-predict-Loan-Defaulters
-# 🏦 Loan Default Prediction App
+# Loan Portfolio Lab
 
-This is a Streamlit-based web application that predicts the likelihood of a loan default using machine learning.
+A full stack, **educational model explorer** built from the repository's saved RandomForestClassifier. The former Streamlit script is retained for provenance, while `frontend/` and `backend/` are the current application.
 
-### 📌 Features
+## What changed
 
-- Predicts if a loan will be fully paid or default
-- Trained using a Random Forest Classifier on real-world loan data
-- Interactive input form for credit policy, FICO score, interest rate, etc.
-- Displays clear results: ✅ Fully Paid or ❌ Likely to Default
-- Includes branding with a logo and creator credit
+- The static frontend collects every required numerical input and a loan purpose; it provides a fictional example, responsive result view, and plain language model limitations.
+- The FastAPI service loads only the committed `loan_default_model.joblib`, checks its 19 feature names and class labels, validates inputs, and returns the saved model's score for `not.fully.paid`.
+- Annual income is transformed with the natural logarithm and credit history years with 365.25 days. Interest percentage is divided by 100. The seven purpose indicators are one hot encoded. No missing feature is silently set to zero.
+- Scenarios are sent to the API for one request and are not persisted. No applicant identity or account data is collected.
 
-### 📊 Model
+## Important model limitations
 
-- Model: Random Forest Classifier (`sklearn`)
-- Preprocessed with `pd.get_dummies` to handle categorical variables
-- Saved with `joblib.dump((model, feature_names), "loan_default_model.joblib")`
+The label in the training notebook is `not.fully.paid`. It must not be presented as a verified default event or as a loan approval decision. The notebook contains illustrative hardcoded cross validation values and has no dataset in this repository. Consequently there is no reproducible claim for current discrimination, calibration, subgroup behavior, or generalization. The displayed value is an uncalibrated random forest score. It is not suitable for lending decisions, pricing, or adverse action reasons. Use fictional scenarios only. Before any institutional use, obtain the training data and documented consent or rights, reproduce a leakage free temporal evaluation, assess calibration and subgroup performance, monitor drift, and independently review security and applicable law.
 
-### 🛠 Tech Stack
+The joblib file is a pickle based artifact and should be loaded only from this trusted repository. It was created with scikit-learn 1.5.1; the backend pins that version and Python 3.12.
 
-- Python 🐍
-- Streamlit 🚀
-- Scikit-learn
-- Pandas
-- Joblib
-- VS Code / Jupyter
+## Run locally
 
-### 📁 Folder Structure
-loan-default-prediction-app/
-├── app.py
-├── loan_default_model.joblib
-├── images/
-│ └── logo.JPG
-├── requirements.txt
-└── README.md
+```bash
+python3.12 -m venv .venv
+. .venv/bin/activate
+pip install -r backend/requirements.txt
+FRONTEND_ORIGIN=http://localhost:5500 uvicorn backend.main:app --reload --port 8000
+```
 
-👨‍💻 Created by
-Ebenezer Kwaw
-LinkedIn | GitHub
+In another terminal: `python -m http.server 5500 --directory frontend`. Open `http://localhost:5500`. `frontend/config.js` points to the Render API by default; set `window.LOAN_API_URL='http://localhost:8000'` there during local testing.
 
+## Deploy to Render
+
+`render.yaml` defines a free Python web service and a static frontend in Frankfurt. Import the repository as a Blueprint, or create both services using the same commands and names. Python version is pinned in `.python-version`. The API permits only the frontend origin set by `FRONTEND_ORIGIN`. Verify `/health`, `/api/model-info`, one fictional score, browser CORS, and responsive layout after deployment.
+
+The original Streamlit app and notebook are left intact for reference. They are not part of the deployed runtime.

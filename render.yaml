@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: loan-default-risk-api
+    runtime: python
+    plan: free
+    region: frankfurt
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: FRONTEND_ORIGIN
+        value: https://loan-default-risk-web.onrender.com
+  - type: static
+    name: loan-default-risk-web
+    buildCommand: echo 'Static site ready'
+    staticPublishPath: frontend
